@@ -1,3 +1,5 @@
+'use strict'
+
 const express = require('express');
 const router = express.Router();
 const bodyParser = require("body-parser");
@@ -5,36 +7,39 @@ const path = require('path');
 
 
 let ApplicationController = require('./../../ApplicationTier/ApplicationController.js');
-let IndexGiver = require("./../Controller/getIndex.js");
 
-// 404 GIVER da fare
+let index = require("./../Controller/getIndex.js");
+let E404 = require("./../Controller/get404.js");
 
-module.exports = class PresentationController {
+
+module.exports = class Presentation {
 
     constructor(hostname, port) {
         this.hostname = hostname;
         this.port = port;
         this.app = express();
-        this.resourcesPath = __dirname + './../../public';
+        this.resourcesPath = path.join(__dirname + './../../public');
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(express.static('public'));
         this.ApplicationController = new ApplicationController();
     }
 
-    requestHandler() {
-        //debugger;
-        //this.app.post('/', (req, res) => res.sendFile(this.resourcesPath + 'index.html'));
+    router() {
 
-        /* GET home page. */
-        router.get('/', (req, res, next) => { res.sendFile(IndexGiver.getIndex());});
+        /* Home page */
+        router.get('/', (req, res, next) => { res.sendFile(index.getIndex());});
 
-        this.app.post('/export', (req, res) => this.exportRequest(req, res));
-        //this.app.get("*", (req,res) => res.sendFile(this.resourcesPath + "404.html"));
+        /* Download */
+        router.get('/esporta', (req, res, next) => this.download(req, res));
+
+        /* 404 */
+        router.get('*', (req, res, next) => { res.sendFile(E404.get404());});
+
     }
 
-    exportRequest(req, res) {
-        let toReturn = this.ApplicationController.generateCode(JSON.parse(req.body.data));
+    download(req, res) {
+        let toReturn = this.ApplicationController.codeGenerator(JSON.parse(req.body.data));
         var zip = Archiver('zip');
         res.header('Content-Disposition', 'attachment; filename="' + req.body.name + '.zip"');
         zip.pipe(res);
@@ -45,7 +50,7 @@ module.exports = class PresentationController {
         zip.finalize();
     }
 
-    startServer() { // DA CAMBIARE CON LINK A LOCALHOST
+    start() { 
         this.app.listen(this.port, this.hostname, () => console.log('In ascolto su: ' + this.hostname + ':' + this.port));
     }
 }

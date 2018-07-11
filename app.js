@@ -1,11 +1,11 @@
+'use strict'
 
 let Presentation = require('./Tier/PresentationTier/Middleware/Index.js');
 
-const hostname = '127.0.0.1';
-const port = 3000; // OR PORT ENVIRONMENT
-var resourcesPath = __dirname + './public/';
+const hostname = '127.0.0.1'; // localhost
+const port = process.env.PORT || 3000; 
 
 let server = new Presentation(hostname, port);
-server.startServer(hostname, port);
-server.requestHandler();
+server.start(hostname, port);
+server.router();
 
