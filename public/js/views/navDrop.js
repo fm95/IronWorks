@@ -19,7 +19,7 @@ App.navDrop = App.Editor.extend({
 
   render: function() {
       this.$el.html(this.template());
-      return this;
+      return this.$el;
   },
 
   getGraph: function() {
@@ -27,6 +27,8 @@ App.navDrop = App.Editor.extend({
   },
 
   buildGraph: function() {
+    var view = this;
+
     this.dropGraph = new joint.dia.Graph;
     this.dropPaper = new joint.dia.Paper({
       el: $('#paper'),
@@ -104,9 +106,10 @@ App.navDrop = App.Editor.extend({
     );
 /*
     this.dropPaper.on('element:pointerdblclick', function(elementView, evt, x, y) {
-        const typeE = elementView.model.attr('label');
+        const typeE = elementView.model.attr('label/text');
         if(typeE == 'Entity'){
 
+        TABELLA POP-UP (stile log-in)
           alert("TODO: Entity_editor");
 
         }
@@ -114,24 +117,36 @@ App.navDrop = App.Editor.extend({
 */
 
     $('#delete').on('click', function() {
-      if (select)
-      select.remove();
+      if (select){
+        const type = select.attr('label/text');
+        if(type == 'Entity'){
+          const name = select.attr('text/text');
+          view.trigger('deleteE', name);
+        }    
+        select.remove();
+      }
     });
+
     $('#modifica').on('click', function() {
       if (select) {
-
-        alert(select.attr('label/text'));
-
         let newN = $('#textA').val();
         if(newN.length > 0){
+
           if(select.isLink()) {
             select.appendLabel({
                   attrs: {text: {text: newN}},
                   position: {distance: 0.50}
                 });
           }
-          else
-            select.attr('text/text', $('#textA').val());
+          else {
+              const type = select.attr('label/text');
+              if(type == 'Entity'){
+                view.trigger('changeName', select, newN);
+              }else{
+                select.attr('text/text', newN);
+              }
+          }
+
         }
         $('#textA').val("");
       }

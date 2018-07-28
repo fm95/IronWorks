@@ -18,11 +18,16 @@ App.Editor = Backbone.View.extend({
     this.drag = new App.navDrag();
     this.drop = new App.navDrop();
 
+  // Collections //
+    this.entities = new App.Entities();
+    this.counter = 0;
+
   // DRAG event //
     this.listenTo(this.drag, 'drawElement', this.draw);
 
   // DROP event //
-
+    this.listenTo(this.drop, 'changeName', this.change);
+    this.listenTo(this.drop, 'deleteE', this.eliminaE);
 
   // MENU event //
     this.listenTo(this.menu, 'esporta', this.esporta);
@@ -32,7 +37,7 @@ App.Editor = Backbone.View.extend({
   },
 
   render: function() {
-    return this;
+    return this.$el;
   },
 
   loadGraph: function(graph) {
@@ -43,12 +48,35 @@ App.Editor = Backbone.View.extend({
 
 // DRAG event //
   draw: function(el) {
+    const type = el.attr('label/text');
+
+    if(type === 'Entity') {
+        let name = 'Entity_' + this.counter;
+        this.counter++;
+        el.attr('text/text', name);
+        this.entities.add(new App.Entity({name:name}));
+    }
+
     this.drop.getGraph().addCell(el);
   },
-
 /////////////////
-
 // DROP event //
+  change: function(select, newN) {
+    let old = select.attr('text/text');
+    let el = this.entities.findWhere({name:newN});
+    if(el){
+        alert("ERRORE!\nEsiste già una entità con questo nome");
+        select.attr('text/text', old);
+    }else{
+        let el = this.entities.findWhere({name:old});
+        el.setName(newN);
+        select.attr('text/text', newN);
+    }
+  },
+
+  eliminaE: function(arg) {
+    this.entities.findWhere({name:arg}).destroy();
+  },
 
 /////////////////
 // MENU event //
@@ -64,6 +92,8 @@ App.Editor = Backbone.View.extend({
   },
 
   deleteAll: function() {
+    this.counter = 0;
+    this.entities.reset();
     this.drop.getGraph().clear();
   },
 /////////////////
