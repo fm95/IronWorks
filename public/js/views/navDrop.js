@@ -54,12 +54,9 @@ App.navDrop = App.Editor.extend({
           // Prevent linking from output ports to input ports within one element.
           if (cellViewS === cellViewT)
               return false;
-          else {
-            return true;
-          }
-/*
-          const typeS = cellViewS.model.attr('label');
-          const typeT = cellViewT.model.attr('label');
+
+          const typeS = cellViewS.model.attr('label/text');
+          const typeT = cellViewT.model.attr('label/text');
           if((typeS == 'Actor' && typeT == 'Boundary') || // Attore -> Interfaccia
               (typeS == 'Boundary' && typeT == 'Controller') || // Interfaccia -> Controller
                 (typeS == 'Controller' && typeT == 'Controller') || // Controller -> Controller
@@ -68,7 +65,6 @@ App.navDrop = App.Editor.extend({
                       return (magnetS !== magnetT);
           else // altrimenti connessione non valida
             return false;
-*/
       },
 
     });
@@ -123,6 +119,9 @@ App.navDrop = App.Editor.extend({
     });
     $('#modifica').on('click', function() {
       if (select) {
+
+        alert(select.attr('label/text'));
+
         let newN = $('#textA').val();
         if(newN.length > 0){
           if(select.isLink()) {

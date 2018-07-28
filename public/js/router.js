@@ -16,14 +16,14 @@ App.Router = Backbone.Router.extend({
       let index = new App.Index();
       console.log('Home page!');
       this.listenTo(index, 'saveP', this.editor);
-      
+
     },
 
     editor: function(name, dati) {
 
       let editor = new App.Editor(name, dati);
-      if(dati){ editor.loadGraph(dati);
-      }else{ console.log('Editor!');}
+      if(dati){ editor.loadGraph(dati);}
+      else{console.log('Editor!');}
 
     },
 

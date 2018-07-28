@@ -1,18 +1,18 @@
 ROBUST-DESIGNER
 
 Back-end:
-    - modificare:
-        ~ PresentationTier/Middleware/Index.js: download()
-        ~ ApplicationTier/ApplicationController.js
-        ~ ApplicationTier/generator -> rivedere generatori di codice
+    ~ PresentationTier/Middleware/Index.js: download()
+    ~ ApplicationTier/ApplicationController.js
+    ~ ApplicationTier/generator -> rivedere generatori di codice
 
     - TEST ?!?!?!?!
 
 
 Front-end:
-    - Esporta File .pro -> codice
+    - Entity model -> generazione codice
 
     - Tabella dati Entity
-    - Generazione codice
+
+    - Esporta File .pro -> codice
 
 

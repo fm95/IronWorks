@@ -113,8 +113,8 @@ App.navDrag = App.Editor.extend({
       type: 'devs.CircleModel',
       position: {x: 12, y: 70},
       attrs: {
-            label: "Actor",
-            text: {text: 'Actor'},
+            label: {text:'Actor'}, // identifier (non-modificabile)
+            text: {text: 'Actor'}, // name (modificabile)
             image: {
                 height: 75,
                 'xlink:href': './img/Actor.svg',
@@ -150,7 +150,7 @@ App.navDrag = App.Editor.extend({
       type: 'devs.CircleModel',
       position: {x: 7, y: 200},
       attrs: {
-            label: 'Boundary',
+            label: {text:'Boundary'},
             text: {text: 'Boundary'},
             image: {
                 'xlink:href': './img/Boundary.svg',
@@ -188,7 +188,7 @@ App.navDrag = App.Editor.extend({
       type: 'devs.CircleModel',
       position: {x: 11, y: 350},
       attrs: {
-            label: 'Controller',
+            label: {text:'Controller'},
             text: {text: 'Controller'},
             image: {
                 'xlink:href': './img/Controller.svg',
@@ -225,7 +225,7 @@ App.navDrag = App.Editor.extend({
       type: 'devs.CircleModel',
       position: {x: 10, y: 500},
       attrs: {
-            label: 'Entity',
+            label: {text:'Entity'},
             text: {text: 'Entity'},
             image: {
                 'xlink:href': './img/Entity.svg',
