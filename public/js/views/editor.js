@@ -30,7 +30,8 @@ App.Editor = Backbone.View.extend({
     this.listenTo(this.drop, 'deleteE', this.eliminaE);
 
   // MENU event //
-    this.listenTo(this.menu, 'esporta', this.esporta);
+    this.listenTo(this.menu, 'esportaJSON', this.esportaJSON);
+    this.listenTo(this.menu, 'esportaZIP', this.esportaZIP);
     this.listenTo(this.menu, 'deleteAll', this.deleteAll);
 
     this.render();
@@ -80,7 +81,7 @@ App.Editor = Backbone.View.extend({
 
 /////////////////
 // MENU event //
-  esporta: function(name) {
+  esportaJSON: function(name) {
     let download = document.createElement('a');
     download.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(this.drop.getGraph().toJSON())));
     let nameProject = name + '.json';
@@ -91,10 +92,60 @@ App.Editor = Backbone.View.extend({
     document.body.removeChild(download);
   },
 
+  esportaZIP: function(name) {
+/* Creo un form che, una volta salvati i dati (json, entities),
+   come action reinderizza alla pagine /esporta, gestita dalla
+   funzione router() del file server PresentationTier/Middleware/index.js
+   il quale chiama una funzione che richiama i generatori di codice
+   e restituisce lo zip finale. */
+
+  // Form per l'esportazione //
+    let form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", '/esporta');
+    form.setAttribute("target", '_blank');
+
+  // Collections di entities //
+    let entities = JSON.stringify(this.entities);
+    let input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = "data";
+    input.value = entities;
+    form.appendChild(input);
+
+  // Nome progetto //
+    let nome = document.createElement('input');
+    nome.type = 'hidden';
+    nome.name = 'name';
+    nome.value = name;
+    form.appendChild(nome);
+
+  // ZIP //
+    let data = {
+        'name': name,
+        'entities': this.entities,
+        'graph': this.drop.getGraph()
+    };
+    let zip = document.createElement('input');
+    zip.type = 'hidden';
+    zip.name = 'zip';
+    zip.value = JSON.stringify(data);
+    form.appendChild(zip);
+
+// Form submit //
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+  },
+
   deleteAll: function() {
     this.counter = 0;
     this.entities.reset();
     this.drop.getGraph().clear();
+    $('#delete').prop('disabled', true);
+    $('#modifica').prop('disabled', true);
+    $('#textA').prop('disabled', true);
+    $('#textA').val("");
   },
 /////////////////
 

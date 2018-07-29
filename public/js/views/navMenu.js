@@ -38,18 +38,19 @@ App.navMenu = App.Editor.extend({
     $('#esportaDialog').removeClass( "modalNone" ).addClass( "modalView" );
   },
 
-  downloadJ: function() {
+  downloadJ: function() { // JSON
     let name = $('input[name="projectN"]').val();
     if(name.length <=0 || name.length > 16)
       name = "Diagramma";
-    this.trigger('esporta', name);
+    this.trigger('esportaJSON', name);
     $('#esportaDialog').removeClass( "modalView" ).addClass( "modalNone" );
   },
 
-  downloadZ: function() {
-    let name = this.projectName;
-    //this.trigger('esporta', name);
-    alert("TODO!");
+  downloadZ: function() { // ZIP
+    let name = $('input[name="projectN"]').val();
+    if(name.length <=0 || name.length > 16)
+      name = "Diagramma";
+    this.trigger('esportaZIP', name);
     $('#esportaDialog').removeClass( "modalView" ).addClass( "modalNone" );
   },
 

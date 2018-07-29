@@ -5,6 +5,7 @@ const fs = require('fs');
 const archiver = require('archiver');
 
 // require generator
+let JavaGenerator = require('./generators/javaGenerator.js');
 
 module.exports = class ApplicationController {
 
@@ -13,7 +14,9 @@ module.exports = class ApplicationController {
     }
 
     codeGenerator(data) {
-        // TODO
+      let javaG = new JavaGenerator();
+      let javaFiles = javaG.generate(data);
+      return {'java': javaFiles};
     }
 
 }
