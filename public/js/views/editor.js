@@ -28,6 +28,7 @@ App.Editor = Backbone.View.extend({
   // DROP event //
     this.listenTo(this.drop, 'changeName', this.change);
     this.listenTo(this.drop, 'deleteE', this.eliminaE);
+    this.listenTo(this.drop, 'addAttribute', this.addAttribute);
 
   // MENU event //
     this.listenTo(this.menu, 'esportaJSON', this.esportaJSON);
@@ -50,7 +51,6 @@ App.Editor = Backbone.View.extend({
 // DRAG event //
   draw: function(el) {
     const type = el.attr('label/text');
-
     if(type === 'Entity') {
         let name = 'Entity_' + this.counter;
         this.counter++;
@@ -77,6 +77,22 @@ App.Editor = Backbone.View.extend({
 
   eliminaE: function(arg) {
     this.entities.findWhere({name:arg}).destroy();
+  },
+
+  addAttribute: function(entityName) {
+
+    //alert("TODO: html-table for entity's fields");
+
+    let el = this.entities.findWhere({name:entityName});
+
+    // da creare in base ai valori degli attributi //
+    let value = ['private', 'int', 'counter', 'false'];
+
+    el.addAttribute(value);
+
+    //modifica //
+    value = ['private', 'bool', 'counter', 'false'];
+    el.modifyAttribute('counter', value);
   },
 
 /////////////////

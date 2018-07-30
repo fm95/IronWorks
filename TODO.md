@@ -1,10 +1,11 @@
 ROBUST-DESIGNER
 
-Front-end:
-
-    - Generazione codice Entity
+Back-end:
 
     - Tabella dati Entity
+    - Importazione: JSON + codice
+
+    ~ check xml -> hibernate
 
 
 *** TEST ***

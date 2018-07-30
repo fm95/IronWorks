@@ -1,38 +1,49 @@
 'use strict';
 
-var GeneratorTemplate = require('./generatorTemplate.js');
+module.exports = class JavaGenerator {
 
-module.exports = class JavaGenerator extends GeneratorTemplate {
-    constructor(){
-        super();
+    constructor() {
+      this.code = '';
+      this.metodi = '';
     }
-    newEntity(name) {
-        this.generatedCode += ('public class ' + name + ' {\n');
+
+    generate(data) {
+        if(data.length > 0) {
+          for (let i = 0; i < data.length; i++) {
+              let entity = data[i];
+
+              this.code += ('/*\n* Entità ' + entity.name + '\n*/\n');
+              this.code += ('class ' + entity.name + ' {');
+
+              if(entity.attr.length > 0){ this.code += ('\n\n'); }
+              for(let i = 0; i < entity.attr.length; i++) {
+                  let attribute = entity.attr[i];
+                  this.newField(
+                      attribute.scope,
+                      attribute.type,
+                      attribute.name,
+                      attribute.primaryKey,
+                  );
+              }
+              if(entity.attr.length > 0){ this.code += ('\n' + this.metodi + '\n'); }
+              this.code += ('}\n\n');
+              this.metodi = '';
+          }
+          let aux = this.code;
+          this.code = '';
+          this.metodi = '';
+
+          return aux;
+        }
+        else {
+            return '';
+        }
     }
-    newAttribute(name, type, length, pk, nn, uq, ai, def) {
-        this.generatedCode += ('public ' + type + ' ' + name + ';\n');
-        this.temporaryClassMethod += (type + ' get' + name.substring(0,1).toUpperCase() + name.substring(1) + '() {return ' + name + ';}\n');
-        this.temporaryClassMethod += ('void set' + name.substring(0,1).toUpperCase() + name.substring(1) + '(' + type + ' ' + name + ') {this.' + name + ' = ' + name + ';}\n');
+
+    newField(scope, type, name, primaryKey) {
+        this.code += ('   ' + scope + ' ' + type + ' ' + name + ';\n');
+        this.metodi += ('   ' + type + ' get' + name.substring(0,1).toUpperCase() + name.substring(1) + '() {return ' + name + ';}\n');
+        this.metodi += ('   void set' + name.substring(0,1).toUpperCase() + name.substring(1) + '(' + type + ' ' + name + ') {this.' + name + ' = ' + name + ';}\n');
     }
-    closeEntity() {
-        this.generatedCode += ('%%SUBCLASSES%%\n');
-        this.generatedCode += (this.temporaryClassMethod);
-        this.generatedCode += ('}\n');
-        this.temporaryClassMethod = '';
-    }
-/*
-    newSubEntity(name, parentName) {
-        this.temporaryClassExtra += ('public class ' + name + ';\n')
-        this.generatedCode += ('class ' + name + ' {\n');
-    }
-    closeSubEntity(parentName) {
-        this.generatedCode += (this.temporaryClassMethod);
-        this.generatedCode += ('}\n');
-        this.temporaryClassMethod = '';
-    }
-*/
-    closeAll() {
-        this.generatedCode = this.generatedCode.replace(new RegExp('%%SUBCLASSES%%', 'g'), this.temporaryClassExtra);
-        this.reset();
-    }
+
 }

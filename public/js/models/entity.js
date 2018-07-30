@@ -4,41 +4,70 @@ var App = App || {};
 
 App.Entity = Backbone.Model.extend({
 
-  initialize: function() {
-    if (!this.has('attr'))
-      this.set('attr', new App.Field());
+  defaults: {
+    name: '',
+  },
 
+  initialize: function() {
+    // Collection di campi dati //
+    this.set('attr', new App.Fields());
+  },
+
+  parse: function(response) {
+  /* permette di ottenere il JSON anche della collection attr */
+      debugger;
+      if (_.has(response, "attr")) {
+          let aux = new new App.Fields(response.attr);
+          this.set('attr', aux);
+          delete response.attr;
+      }
+      return response;
+  },
+
+  setName: function (name) {
+    this.set({name: name});
   },
 
   getName: function() {
     return this.get('name');
   },
 
-  setName: function(name) {
-    this.set({name: name});
+  getAttribute: function(attributeName) {
+    return this.attr.findWhere({name: attributeName});
   },
 
-  getAttribute: function(attributeName){
-      return this.attr.where({name: attributeName});
+  modifyAttribute: function(fieldName, value) {
+    let attr = this.get('attr');
+    let field = attr.findWhere({name:fieldName});
+    field.setScope(value[0]);
+    field.setType(value[1]);
+    field.setName(value[2]);
+    field.setPK(value[3]);
   },
 
-  addAttribute: function (attribute) {
-      let attributesTemp = this.get('attr');
-      attributesTemp.add(attribute);
+  addAttribute: function(value) {
+    let attr = this.get('attr');
+
+    let field = new App.Field();
+    field.setScope(value[0]);
+    field.setType(value[1]);
+    field.setName(value[2]);
+    field.setPK(value[3]);
+
+    attr.add(field);
   },
 
   removeAttribute: function (attribute) {
-      this.attr.remove(attribute);
+    this.attr.remove(attribute);
   },
 
   getAttributes: function () {
-      return this.attr;
+    return this.attr;
   },
 
   getJSON: function() {
-    var json = _.clone(this.attributes);
-    json.attr = this.get('attr').toJSON();
-    return json;
+    var json = JSON.stringify(this);
+    console.log(json);
   },
 
 });

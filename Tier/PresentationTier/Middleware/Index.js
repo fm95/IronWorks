@@ -39,12 +39,14 @@ module.exports = class Presentation {
     }
 
     download(req, res) {
+       console.log(JSON.parse(req.body.data));
+
        let data = this.ApplicationController.codeGenerator(JSON.parse(req.body.data));
        let zip = archiver('zip');
        res.header('Content-Disposition', 'attachment; filename="' + req.body.name + '.zip"');
        zip.pipe(res);
-       for(let key in data) {
-           zip.append(data[key], {name: 'file'+key+'.'+key});
+       for(let type in data) {
+           zip.append(data[type], {name: req.body.name + '.' + type});
        }
        zip.append(req.body.zip, {name: req.body.name + '.json'});
        zip.finalize();

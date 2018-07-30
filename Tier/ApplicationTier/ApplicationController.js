@@ -4,19 +4,21 @@ const zip = new require('node-zip');
 const fs = require('fs');
 const archiver = require('archiver');
 
-// require generator
 let JavaGenerator = require('./generators/javaGenerator.js');
 
 module.exports = class ApplicationController {
 
     constructor(data) {
         this.rawData = 0;
+        this.java = new JavaGenerator();
+        // SQL
+        // XML
     }
 
     codeGenerator(data) {
-      let javaG = new JavaGenerator();
-      let javaFiles = javaG.generate(data);
-      return {'java': javaFiles};
+      //console.log(data);
+      let javaCode = this.java.generate(data);
+      return {'java': javaCode};
     }
 
 }

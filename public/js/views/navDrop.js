@@ -104,17 +104,14 @@ App.navDrop = App.Editor.extend({
           }
       }
     );
-/*
     this.dropPaper.on('element:pointerdblclick', function(elementView, evt, x, y) {
         const typeE = elementView.model.attr('label/text');
         if(typeE == 'Entity'){
-
-        TABELLA POP-UP (stile log-in)
-          alert("TODO: Entity_editor");
-
+          let name = elementView.model.attr('text/text');
+          view.trigger('addAttribute', name);
         }
     });
-*/
+
 
     $('#delete').on('click', function() {
       if (select){
@@ -122,7 +119,7 @@ App.navDrop = App.Editor.extend({
         if(type == 'Entity'){
           const name = select.attr('text/text');
           view.trigger('deleteE', name);
-        }    
+        }
         select.remove();
       }
     });

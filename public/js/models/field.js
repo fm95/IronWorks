@@ -3,35 +3,50 @@
 var App = App || {};
 
 App.Field = Backbone.Model.extend({
+
   defaults: {
-    name: '',
+    scope: '',
     type: '',
-    length: '',
+    name: '',
+    // value
+    primaryKey:false,
+  },
+
+  setScope: function (scope) {
+    this.set({scope: scope});
+  },
+
+  getScope: function() {
+    return this.get('scope');
+  },
+
+  setType: function (type) {
+    this.set({type: type});
+  },
+
+  getType: function() {
+    return this.get('type');
   },
 
   setName: function (name) {
-      this.set({name: name});
+    this.set({name: name});
   },
 
   getName: function() {
     return this.get('name');
   },
 
-  setLength: function(length){
-      this.set({length: length});
+  setPK: function (bool) {
+    this.set({primaryKey: bool});
   },
 
-  getLength: function () {
-      return this.get('length');
+  getPK: function() {
+    return this.get('primaryKey');
   },
 
-  setType: function (type) {
-      this.set({type: type});
+  getJSON: function() {
+    let json = JSON.stringify(this.toJSON());
+    return json;
   },
-
-  getType: function () {
-      return this.get('type');
-  },
-
 
 });
