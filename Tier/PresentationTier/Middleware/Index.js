@@ -39,8 +39,6 @@ module.exports = class Presentation {
     }
 
     download(req, res) {
-       console.log(JSON.parse(req.body.data));
-
        let data = this.ApplicationController.codeGenerator(JSON.parse(req.body.data));
        let zip = archiver('zip');
        res.header('Content-Disposition', 'attachment; filename="' + req.body.name + '.zip"');
