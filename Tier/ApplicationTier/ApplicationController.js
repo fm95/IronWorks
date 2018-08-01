@@ -5,23 +5,26 @@ const fs = require('fs');
 const archiver = require('archiver');
 
 let JavaGenerator = require('./generators/javaGenerator.js');
-let SQLGenerator = require('./generators/sqlGenerator.js');
+let XMLGenerator = require('./generators/xmlGenerator.js');
 
 module.exports = class ApplicationController {
 
     constructor(data) {
         this.rawData = 0;
         this.java = new JavaGenerator();
-        this.sql = new SQLGenerator();
+        this.xml = new XMLGenerator();
     }
 
     codeGenerator(data) {
       //console.log(data);
 
       let javaCode = this.java.generate(data);
-      let sqlCode = this.sql.generate(data);
+      let xmlCode = this.xml.generate(data);
 
-      return {'java': javaCode, 'sql': sqlCode};
+      return {
+          'java': javaCode,
+          'xml': xmlCode,
+      };
     }
 
 }

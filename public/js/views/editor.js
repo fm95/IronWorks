@@ -91,7 +91,7 @@ App.Editor = Backbone.View.extend({
     el.addAttribute(value);
 
     //modifica //
-    value = ['private', 'bool', 'counter', 'false'];
+    value = ['private', 'double', 'counter', 'true'];
     el.modifyAttribute('counter', value);
   },
 
