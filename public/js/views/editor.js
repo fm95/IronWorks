@@ -20,7 +20,7 @@ App.Editor = Backbone.View.extend({
 
   // Collections //
     this.entities = new App.Entities();
-    this.counter = 0;
+    this.counter = 0; // NON con App.Entities.length
 
   // DRAG event //
     this.listenTo(this.drag, 'drawElement', this.draw);
@@ -28,7 +28,7 @@ App.Editor = Backbone.View.extend({
   // DROP event //
     this.listenTo(this.drop, 'changeName', this.change);
     this.listenTo(this.drop, 'deleteE', this.eliminaE);
-    this.listenTo(this.drop, 'addAttribute', this.addAttribute);
+    this.listenTo(this.drop, 'addAttribute', this.navEntity);
 
   // MENU event //
     this.listenTo(this.menu, 'esportaJSON', this.esportaJSON);
@@ -79,20 +79,18 @@ App.Editor = Backbone.View.extend({
     this.entities.findWhere({name:arg}).destroy();
   },
 
-  addAttribute: function(entityName) {
 
-    //alert("TODO: html-table for entity's fields");
+  addAttribute: function() {
 
-    let el = this.entities.findWhere({name:entityName});
 
+
+    //let el = this.entities.findWhere({name:entityName});
     // da creare in base ai valori degli attributi //
-    let value = ['private', 'int', 'counter', 'false'];
-
-    el.addAttribute(value);
-
+    //let value = ['private', 'int', 'counter', 'false'];
+    //el.addAttribute(value);
     //modifica //
-    value = ['private', 'double', 'counter', 'true'];
-    el.modifyAttribute('counter', value);
+    //value = ['private', 'double', 'counter', 'true'];
+    //el.modifyAttribute('counter', value);
   },
 
 /////////////////

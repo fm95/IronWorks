@@ -7,13 +7,12 @@ App.Router = Backbone.Router.extend({
     routes: {
         "": "home",
         "editor/:name": "editor",
-        "entity/:name": "entity",
         '*random': 'error404'
     },
 
     home: function() {
 
-      let index = new App.Editor();
+      let index = new App.Index();
       console.log('Home page!');
       this.listenTo(index, 'saveP', this.editor);
 
@@ -24,10 +23,6 @@ App.Router = Backbone.Router.extend({
       let editor = new App.Editor(name, dati);
       if(dati){ editor.loadGraph(dati);}
       else{console.log('Editor!');}
-
-    },
-
-    entity: function(name) {
 
     },
 

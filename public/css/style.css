@@ -73,7 +73,10 @@ footer {
 #newDialog form, #loadDialog form {
   max-width: 30%;
 }
-#newDialog label, #loadDialog label, #esportaDialog label{
+#entityDialog form {
+  max-width: 60%;
+}
+#newDialog label, #loadDialog label, #esportaDialog label, #entityDialog label{
   font-size: 1.3em;
 }
 .dialogFooter {
@@ -84,7 +87,7 @@ footer {
   width: 100%;
 }
 
-#newDialog input[type=text], #esportaDialog input[type=text], #loadDialog input[type=file] {
+#newDialog input[type=text], #esportaDialog input[type=text], #loadDialog input[type=file], #entityDialog input[type=file] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -93,7 +96,7 @@ footer {
     box-sizing: border-box;
 }
 
-#newDialog .container, #loadDialog .container, #esportaDialog .container {
+#newDialog .container, #loadDialog .container, #esportaDialog .container, #entityDialog .container {
     padding: 16px;
     max-width: 100%;
 }
@@ -239,3 +242,19 @@ footer {
   text-align: center;
 }
 /*********************************/
+/*** Entity ***/
+.addAttribute {
+  margin-bottom: 3px;
+}
+#entityList {
+  list-style-type: none;
+  overflow-y: scroll;
+  height:150px;
+}
+.w3-ul li {
+  list-style: none;
+}
+.w3-bar select, .w3-bar input {
+  border-radius: 2px;
+}
+/**************/

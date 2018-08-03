@@ -2,12 +2,11 @@ ROBUST-DESIGNER
 
 Back-end:
 
-    - Tabella dati Entity
-    - Importazione: JSON + codice
+    - Add attribute to Entity
+
+    - Importazione ZIP
 
     ~ check xml -> hibernate
 
 
 *** TEST ***
-
-

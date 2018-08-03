@@ -11,6 +11,12 @@ App.navDrop = App.Editor.extend({
 
   template: _.template($('script[name="navDrop"]').html()),
 
+  events: {
+      'click .addAttribute':     'addAttribute',
+      'click .Chiudi':           'chiudi',
+      'click .saveAttr':         'saveAttr',
+  },
+
   initialize: function() {
     this.render();
     this.buildGraph();
@@ -107,11 +113,12 @@ App.navDrop = App.Editor.extend({
     this.dropPaper.on('element:pointerdblclick', function(elementView, evt, x, y) {
         const typeE = elementView.model.attr('label/text');
         if(typeE == 'Entity'){
-          let name = elementView.model.attr('text/text');
-          view.trigger('addAttribute', name);
+          $('#entityDialog').removeClass( "modalNone" ).addClass( "modalView" );
+          let entityName = elementView.model.attr('text/text');
+          $('.nomeEnt').text(entityName);
+          view.trigger('addAttribute', entityName);
         }
     });
-
 
     $('#delete').on('click', function() {
       if (select){
@@ -149,6 +156,23 @@ App.navDrop = App.Editor.extend({
       }
     });
 
+  },
+
+  saveAttr: function() {
+///////////////////////
+    alert("TODO");
+//////////////////////
+    $('li').remove();
+    $('#entityDialog').removeClass( "modalView" ).addClass( "modalNone" );
+  },
+
+  chiudi: function() {
+    $('li').remove();
+    $('#entityDialog').removeClass( "modalView" ).addClass( "modalNone" );
+  },
+
+  addAttribute: function() {
+    $("#entityList").append('<li class="w3-bar"><span onclick="this.parentElement.remove()" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span><div class="w3-bar-item"><span class="w3-large">Scope:</span><select><option value="package">private</option><option value="class">protected</option><option value="opel">public</option></select></div><div class="w3-bar-item"><span class="w3-large">Type:</span><select><option value="string">string</option><option value="int">int</option><option value="double">double</option><option value="data">data</option><option value="bool">bool</option></select></div><div class="w3-bar-item"><span class="w3-large">Nome:</span><input type="text" placeholder="my_var" maxlength="15" required></div><div class="w3-bar-item"><input type="checkbox" value=""><span class="w3-large">Primary Key</span></div></li>');
   },
 
   styleLink: function() {

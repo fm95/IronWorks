@@ -7,6 +7,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="stylesheet" href="css/library/w3.css">
     <link rel="stylesheet" href="css/library/Montserrat.css">
     <link rel="stylesheet" href="css/library/bootstrap.min.css">
     <link rel="stylesheet" href="css/library/joint.min.css">
@@ -46,7 +47,6 @@
 
     <!-- Dialogs -->
       <div id="newDialog" class="modalNone">
-
         <form class="modal-content animate">
           <div class="container">
             <label for="uname"><b>Inserisci il nome del nuovo progetto</b></label><br>
@@ -82,7 +82,7 @@
   <script type="text/template" name="navMenu">
 
     <div class="firstLine">
-      <h4><b>Progetto: </b></h4><p><%= project_name %></p>
+      <h4><b>Progetto: </b></h4><p><i><%= project_name %></i></p>
       <button type="button" id="esporta" class="btn btn-success pull-right">Esporta</button>
     </div>
       <br>
@@ -139,49 +139,63 @@
        <div id="paper"></div>
      </span>
 
+     <!-- ENTITY-->
+      <div id="entityDialog" class="modalNone">
+        <form class="modal-content animate">
+          <div class="container">
+            <h4>Attributi Entità: <i class="nomeEnt"></i></h4>
+
+            <button type="button" class="btn btn-success btn-md addAttribute">Aggiungi</button>
+
+            <div id="entityList">
+              <ul id="attrList" class="w3-ul w3-card-4">
+
+                <!-- Attribute <li>
+                <li class="w3-bar">
+                    <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
+                    <div class="w3-bar-item">
+                      <span class="w3-large">Scope:</span>
+                      <select>
+                        <option value="package">private</option>
+                        <option value="class">protected</option>
+                        <option value="opel">public</option>
+                      </select>
+                    </div>
+                    <div class="w3-bar-item">
+                    	<span class="w3-large">Type:</span>
+                      <select>
+                        <option value="string">string</option>
+                        <option value="int">int</option>
+                        <option value="double">double</option>
+                        <option value="data">data</option>
+                        <option value="bool">bool</option>
+                      </select>
+                    </div>
+                    <div class="w3-bar-item">
+                    	<span class="w3-large">Nome:</span>
+                      <input type="text" placeholder="my_var" maxlength="15" required/>
+                    </div>
+                    <div class="w3-bar-item">
+                      <input type="checkbox" value=""/><span class="w3-large">Primary Key</span>
+                    </div>
+                </li>
+
+                 <!- END attribute -->
+
+              </ul>
+            </div>
+          </div>
+            <br>
+          <div class="container dialogFooter">
+            <button type="button" class="btn btn-danger btn-md Chiudi">Chiudi</button>
+            <button type="button" class="btn btn-success btn-md pull-right saveAttr">Salva</button>
+          </div>
+        </form>
+      </div>
+     <!-- END Entity -->
+
    </script>
 <!-- END Drop -->
-
-<!-- DROP-->
-   <script type="text/template" name="table">
-
-     <table class="table">
-       <thead>
-         <tr>
-           <th>Entity_n</th>
-         </tr>
-       </thead>
-       <tbody>
-         <tr>
-           <td><input type="text" placeholder="sub_entity" class="nameEntity form-control" minlength="3" maxlength="15" required></td>
-         </tr>
-         <tr>
-           <td>Tipo: <select class="form-control" id="typeEntity">
-                        <option>string</option>
-                        <option>double</option>
-                        <option>data</option>
-                        <option>boolean</option>
-                        <option>Array</option>
-                      </select></td>
-         </tr>
-         <tr>
-           <td>Valore: <input type="text" placeholder="value" class="dataType form-control" maxlength="15" required></td>
-         </tr>
-         <tr>
-           <td><button class="btn btn-success btn-md center-block">Aggiungi</button></td>
-         </tr>
-         <tr>
-           <td><button class="btn btn-danger btn-md center-block">Elimina</button></td>
-         </tr>
-         <tr>
-           <td><button class="btn btn-info btn-md center-block">Nuovo Campo</button></td>
-         </tr>
-       </tbody>
-     </table>
-
-   </script>
-<!-- END Drop -->
-
 
 
 <!-- DEPENDENCIES -->
@@ -206,7 +220,6 @@
   <script src="js/views/navMenu.js"></script>
   <script src="js/views/navDrag.js"></script>
   <script src="js/views/navDrop.js"></script>
-  <script src="js/views/table.js"></script>
 
 <!-- BACKBONE SCRIPTS -->
   <script src="js/router.js"></script>
