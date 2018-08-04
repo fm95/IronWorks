@@ -74,7 +74,7 @@ footer {
   max-width: 30%;
 }
 #entityDialog form {
-  max-width: 60%;
+  max-width: 62%;
 }
 #newDialog label, #loadDialog label, #esportaDialog label, #entityDialog label{
   font-size: 1.3em;
@@ -228,20 +228,6 @@ footer {
     height: 130px;
 }
 /*********************************/
-/* Table data */
-.table {
-  border-collapse: collapse;
-  border: solid 1px black;
-  height: 574px;
-  width: 170px;
-}
-.table tr, th, td {
-  border: solid 1px black;
-}
-.table th {
-  text-align: center;
-}
-/*********************************/
 /*** Entity ***/
 .addAttribute {
   margin-bottom: 3px;
@@ -249,7 +235,7 @@ footer {
 #entityList {
   list-style-type: none;
   overflow-y: scroll;
-  height:150px;
+  height:190px;
 }
 .w3-ul li {
   list-style: none;

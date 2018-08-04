@@ -33,10 +33,13 @@ App.Entity = Backbone.Model.extend({
   },
 
   getAttribute: function(attributeName) {
-    return this.attr.findWhere({name: attributeName});
+    let attr = this.get('attr');
+    let aux = attr.findWhere({name: attributeName});
+    return aux;
   },
 
   modifyAttribute: function(fieldName, value) {
+    //alert("MODIFICA");
     let attr = this.get('attr');
     let field = attr.findWhere({name:fieldName});
     field.setScope(value[0]);
@@ -46,6 +49,7 @@ App.Entity = Backbone.Model.extend({
   },
 
   addAttribute: function(value) {
+    //alert("NUOVO");
     let attr = this.get('attr');
 
     let field = new App.Field();
@@ -62,7 +66,8 @@ App.Entity = Backbone.Model.extend({
   },
 
   getAttributes: function () {
-    return this.attr;
+    let attr = this.get('attr');
+    return attr;
   },
 
   getJSON: function() {

@@ -9,7 +9,7 @@ App.Field = Backbone.Model.extend({
     type: '',
     name: '',
     // value
-    primaryKey:false,
+    primaryKey: '',
   },
 
   setScope: function (scope) {
@@ -36,8 +36,8 @@ App.Field = Backbone.Model.extend({
     return this.get('name');
   },
 
-  setPK: function (bool) {
-    this.set({primaryKey: bool});
+  setPK: function (check) {
+    this.set({primaryKey: check});
   },
 
   getPK: function() {

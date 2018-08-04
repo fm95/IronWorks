@@ -59,9 +59,9 @@ module.exports = class JavaGenerator {
             this.code += ('   @Id\n');
         }
         this.code += ('   @Column(name = "' + name + '")\n');
-        this.code += ('   ' + scope + ' ' + type + ' ' + name + ';\n');
+        this.code += ('   ' + scope + ' ' + type + ' ' + name + ';\n\n');
         this.metodi += ('   ' + type + ' get' + name.substring(0,1).toUpperCase() + name.substring(1) + '() {return ' + name + ';}\n');
-        this.metodi += ('   void set' + name.substring(0,1).toUpperCase() + name.substring(1) + '(' + type + ' ' + name + ') {this.' + name + ' = ' + name + ';}\n');
+        this.metodi += ('   void set' + name.substring(0,1).toUpperCase() + name.substring(1) + '(' + type + ' ' + name + ') {this.' + name + ' = ' + name + ';}\n\n');
     }
 
 }

@@ -28,7 +28,8 @@ App.Editor = Backbone.View.extend({
   // DROP event //
     this.listenTo(this.drop, 'changeName', this.change);
     this.listenTo(this.drop, 'deleteE', this.eliminaE);
-    this.listenTo(this.drop, 'addAttribute', this.navEntity);
+    this.listenTo(this.drop, 'addAttribute', this.addAttribute);
+    this.listenTo(this.drop, 'loadAttribute', this.loadAttribute);
 
   // MENU event //
     this.listenTo(this.menu, 'esportaJSON', this.esportaJSON);
@@ -75,22 +76,25 @@ App.Editor = Backbone.View.extend({
     }
   },
 
+  loadAttribute: function(entityName) {
+    let el = this.entities.findWhere({name:entityName});
+    let attr = el.getAttributes();
+    this.drop.caricaAttributi(attr);
+  },
+
   eliminaE: function(arg) {
     this.entities.findWhere({name:arg}).destroy();
   },
 
+  addAttribute: function(entityName, value) {
+    let el = this.entities.findWhere({name:entityName});
+    let fieldName = el.getAttribute(value[2]);
 
-  addAttribute: function() {
-
-
-
-    //let el = this.entities.findWhere({name:entityName});
-    // da creare in base ai valori degli attributi //
-    //let value = ['private', 'int', 'counter', 'false'];
-    //el.addAttribute(value);
-    //modifica //
-    //value = ['private', 'double', 'counter', 'true'];
-    //el.modifyAttribute('counter', value);
+    if(fieldName){ // c'è già un attributo con lo stesso nome
+      el.modifyAttribute(value[2], value);
+    }else{ //nuovo attributo
+      el.addAttribute(value);
+    }
   },
 
 /////////////////
