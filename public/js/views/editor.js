@@ -30,6 +30,7 @@ App.Editor = Backbone.View.extend({
     this.listenTo(this.drop, 'deleteE', this.eliminaE);
     this.listenTo(this.drop, 'addAttribute', this.addAttribute);
     this.listenTo(this.drop, 'loadAttribute', this.loadAttribute);
+    this.listenTo(this.drop, 'removedAttr', this.removedAttr);
 
   // MENU event //
     this.listenTo(this.menu, 'esportaJSON', this.esportaJSON);
@@ -73,6 +74,20 @@ App.Editor = Backbone.View.extend({
         let el = this.entities.findWhere({name:old});
         el.setName(newN);
         select.attr('text/text', newN);
+    }
+  },
+
+  removedAttr: function(entityName, AttrNames) {
+    let el = this.entities.findWhere({name:entityName});
+    let attr = el.getAttributes();
+    if(attr)
+    {
+      attr.forEach( (item) => {
+        // Devo eliminare gli attributi il cui nome (univoco) non è in AttrNames, poichè
+        // significa che sono stati eliminati dall'utente
+          let attr = item.getName();
+          if( $.inArray(attr, AttrNames) === -1) { item.destroy(); }
+      });
     }
   },
 

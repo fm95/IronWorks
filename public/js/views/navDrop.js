@@ -159,45 +159,10 @@ App.navDrop = App.Editor.extend({
 
   caricaAttributi: function(attr) {
     if(attr)
-    {
-      $('#entityDialog li').remove();
+    { // Render model just-in-time
       attr.forEach( (item) => {
-        //alert(item.getScope() + item.getType() + item.getName() + item.getPK());
-        var li = '<li class="w3-bar">'+
-                      '<span onclick="this.parentElement.remove()" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>'+
-                      '<div class="w3-bar-item">'+
-                        '<span class="w3-large">Scope: </span>'+
-                        '<select class="scope">'+
-                          '<option value="private">private</option>'+
-                          '<option value="protected">protected</option>'+
-                          '<option value="public">public</option>'+
-                        '</select>'+
-                      '</div>'+
-                      '<div class="w3-bar-item">'+
-                        '<span class="w3-large">Type: </span>'+
-                          '<select class="type">'+
-                            '<option value="string">string</option>'+
-                            '<option value="int">int</option>'+
-                            '<option value="double">double</option>'+
-                            '<option value="data">data</option>'+
-                            '<option value="bool">bool</option>'+
-                          '</select>'+
-                        '</div>'+
-                        '<div class="w3-bar-item">'+
-                          '<span class="w3-large">Nome: </span>'+
-                            '<input type="text" class="nomeE" placeholder="my_var" maxlength="15" required>'+
-                        '</div>'+
-                        '<div class="w3-bar-item">'+
-                          '<span class="w3-large">Primary key: </span>'+
-                            '<select class="pk">'+
-                              '<option value="false">false</option>'+
-                              '<option value="true">true</option>'+
-                            '</select>'+
-                        '</div>'+
-                      '</li>';
-
-        if( $('#entityList li' ).length === 0){ $("#entityList").append(li); }
-        else { $("#entityList li:last").append(li); }
+        if( $('#entityList li' ).length === 0){ $("#entityList").append(this.attribute); }
+        else { $("#entityList li:last").append(this.attribute); }
 
         $('#entityList li:last .scope').val(item.getScope());
         $('#entityList li:last .type').val(item.getType());
@@ -212,12 +177,11 @@ App.navDrop = App.Editor.extend({
     var entityName = $('.nomeEnt').text();
     var AttrNames = [];
 
-    let items = document.getElementsByTagName('li');
-    for (let i = 0; i < items.length; ++i) {
+    for (let i = 0; i < $('#entityList li' ).length; ++i) {
       var nome = $( ".nomeE:eq(" + i + ")" ).val();
       if(nome.length>0)
       {
-        if( $.inArray(nome, AttrNames) === -1)
+        if( $.inArray(nome, AttrNames) === -1 ) // JQuery ritorna -1 se non trova 'nome' in 'AttrNames'
         {
           AttrNames.push(nome);
           // SCOPE //
@@ -231,11 +195,14 @@ App.navDrop = App.Editor.extend({
           view.trigger('addAttribute', entityName, value);
         }
         else {
-          alert("Questa entità contiene già l'attributo: '" + nome + "'\n"+
+          alert("Questa entità contiene più volte l'attributo: '" + nome + "'\n"+
           "È stata salvata solo la prima occorrenza!");
         }
       }
     }
+    // AttrNames contiene i nomi degli attributi salvati; quelli cancellati vanno eliminati dalla collections
+    view.trigger('removedAttr', entityName, AttrNames);
+
     $('#entityDialog li').remove();
     $('#entityDialog').removeClass( "modalView" ).addClass( "modalNone" );
   },
@@ -246,14 +213,22 @@ App.navDrop = App.Editor.extend({
   },
 
   addAttribute: function() {
+    if( $('#entityList li' ).length === 15 ){
+      alert("Non è possibile aggiungere più di 15 attributi!\n")
+    }else{
+      $("#entityList").append(this.attribute);
+    }
+  },
+
+  attribute: function() {
     var item = '<li class="w3-bar">'+
                   '<span onclick="this.parentElement.remove()" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>'+
                   '<div class="w3-bar-item">'+
                     '<span class="w3-large">Scope: </span>'+
                     '<select class="scope">'+
-                      '<option value="package">private</option>'+
-                      '<option value="class">protected</option>'+
-                      '<option value="opel">public</option>'+
+                      '<option value="private">private</option>'+
+                      '<option value="protected">protected</option>'+
+                      '<option value="public">public</option>'+
                     '</select>'+
                   '</div>'+
                   '<div class="w3-bar-item">'+
@@ -279,11 +254,7 @@ App.navDrop = App.Editor.extend({
                     '</div>'+
                   '</li>';
 
-    if( $('#entityList li' ).length === 15 ){
-      alert("Non è possibile aggiungere più di 15 attributi!\n")
-    }else{
-      $("#entityList").append(item);
-    }
+      return item;
   },
 
   styleLink: function() {
