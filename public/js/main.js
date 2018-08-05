@@ -8,8 +8,9 @@ $(document).ready(function(){
   let Application = new App.Router();
   Backbone.history.start({pushState: false});
 
-  window.onbeforeunload = () => {
-    return "Le modifiche apportate potrebbero non essere salvate.";
+  function myConfirmation() {
+    return 'Le modifiche non salvate andranno perse. Sei sicuro di uscire?';
   }
+  window.onbeforeunload = myConfirmation;
 
 });

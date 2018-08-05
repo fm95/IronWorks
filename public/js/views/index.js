@@ -56,10 +56,11 @@ App.Index = Backbone.View.extend({
       let name = file.name;
       console.log("Importazione " + name + "!");
       name = name.replace('.json', '');
+      name = name.replace('.zip', '');
 
       let r = new FileReader();
       r.onload = function(event){
-          var dati = event.target.result;
+          var dati = JSON.parse(event.target.result);
           view.trigger('saveP', name, dati);
       };
       r.readAsText(file);

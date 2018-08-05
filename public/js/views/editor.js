@@ -44,16 +44,28 @@ App.Editor = Backbone.View.extend({
     return this.$el;
   },
 
-  loadGraph: function(graph) {
-    //console.log(graph);
-    let emptyGraph = this.drop.getGraph();
-    emptyGraph.fromJSON(JSON.parse(graph));
+  loadDati: function(dati) {
+    if(dati.name) { // .zip
+      // Entities //
+        this.entities.reset(dati.entities, {
+            parse: true
+        });
+        this.counter = this.entities.length;
+      // JointJS Diagramm //
+        let emptyGraph = this.drop.getGraph();
+        emptyGraph.fromJSON(dati.graph);
+    }
+    else { // .json
+        let emptyGraph = this.drop.getGraph();
+        emptyGraph.fromJSON(dati);
+    }
   },
 
 // DRAG event //
   draw: function(el) {
     const type = el.attr('label/text');
     if(type === 'Entity') {
+        this.counter = this.entities.length;
         let name = 'Entity_' + this.counter;
         this.counter++;
         el.attr('text/text', name);
@@ -102,8 +114,17 @@ App.Editor = Backbone.View.extend({
 
   loadAttribute: function(entityName) {
     let el = this.entities.findWhere({name:entityName});
-    let attr = el.getAttributes();
-    this.drop.caricaAttributi(attr);
+    if(el)
+    {
+      let attr = el.getAttributes();
+      this.drop.caricaAttributi(attr);
+    }
+    else // nel caso in cui importo un file .json, le entità non sono definite
+    {  // per farlo devo fare un db-click su ognuna almeno una volta, altrimenti vengono viste come un elemento normale
+      el = new App.Entity({name:entityName})
+      this.entities.add(el);
+      this.counter = this.entities.length;
+    }
   },
 
   eliminaE: function(arg) {
@@ -162,11 +183,12 @@ App.Editor = Backbone.View.extend({
     nome.value = name;
     form.appendChild(nome);
 
+    var Graph = this.drop.getGraph();
   // ZIP //
     let data = {
         'name': name,
-        'entities': this.entities,
-        'graph': this.drop.getGraph()
+        'entities': JSON.stringify(this.entities),
+        'graph': JSON.stringify(Graph.toJSON()),
     };
     let zip = document.createElement('input');
     zip.type = 'hidden';
