@@ -12,7 +12,7 @@ App.Router = Backbone.Router.extend({
 
     home: function() {
 
-      let index = new App.Editor();
+      let index = new App.Index();
       console.log('Home page!');
       this.listenTo(index, 'saveP', this.editor);
 

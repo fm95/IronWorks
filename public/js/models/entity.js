@@ -49,7 +49,6 @@ App.Entity = Backbone.Model.extend({
   },
 
   addAttribute: function(value) {
-    //alert("NUOVO");
     let attr = this.get('attr');
 
     let field = new App.Field();
