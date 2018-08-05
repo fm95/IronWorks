@@ -113,10 +113,11 @@ App.navDrop = App.Editor.extend({
     this.dropPaper.on('element:pointerdblclick', function(elementView, evt, x, y) {
         const typeE = elementView.model.attr('label/text');
         if(typeE == 'Entity'){
-          $('#entityDialog').removeClass( "modalNone" ).addClass( "modalView" );
           let entityName = elementView.model.attr('text/text');
           $('.nomeEnt').text(entityName);
+
           view.trigger('loadAttribute', entityName);
+          $('#entityDialog').removeClass( "modalNone" ).addClass( "modalView" );
         }
     });
 
@@ -161,8 +162,7 @@ App.navDrop = App.Editor.extend({
     if(attr)
     { // Render model just-in-time
       attr.forEach( (item) => {
-        if( $('#entityList li' ).length === 0){ $("#entityList").append(this.attribute); }
-        else { $("#entityList li:last").append(this.attribute); }
+        $("#entityList").append(this.attribute);
 
         $('#entityList li:last .scope').val(item.getScope());
         $('#entityList li:last .type').val(item.getType());
@@ -201,7 +201,7 @@ App.navDrop = App.Editor.extend({
       }
     }
     // AttrNames contiene i nomi degli attributi salvati; quelli cancellati vanno eliminati dalla collections
-    view.trigger('removedAttr', entityName, AttrNames);
+      view.trigger('removedAttr', entityName, AttrNames);
 
     $('#entityDialog li').remove();
     $('#entityDialog').removeClass( "modalView" ).addClass( "modalNone" );
@@ -221,7 +221,7 @@ App.navDrop = App.Editor.extend({
   },
 
   attribute: function() {
-    var item = '<li class="w3-bar">'+
+    var item = '<li class="w3-bar itemAttr">'+
                   '<span onclick="this.parentElement.remove()" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>'+
                   '<div class="w3-bar-item">'+
                     '<span class="w3-large">Scope: </span>'+

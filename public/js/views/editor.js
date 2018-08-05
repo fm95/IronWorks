@@ -79,15 +79,24 @@ App.Editor = Backbone.View.extend({
 
   removedAttr: function(entityName, AttrNames) {
     let el = this.entities.findWhere({name:entityName});
-    let attr = el.getAttributes();
-    if(attr)
-    {
-      attr.forEach( (item) => {
-        // Devo eliminare gli attributi il cui nome (univoco) non è in AttrNames, poichè
-        // significa che sono stati eliminati dall'utente
-          let attr = item.getName();
-          if( $.inArray(attr, AttrNames) === -1) { item.destroy(); }
-      });
+
+    if (!Array.isArray(AttrNames) || ! AttrNames.length) { // elimino tutto
+        el.deleteAttributes();
+    }
+    else {
+      let attr = el.getAttributes();
+      if(attr)
+      {
+        attr.forEach( (item) => {
+          // Devo eliminare gli attributi il cui nome (univoco) non è in AttrNames, poichè
+          // significa che sono stati eliminati dall'utente
+            if(item)
+            {
+              let attr = item.getName();
+              if( $.inArray(attr, AttrNames) === -1) { item.destroy(); }
+            }
+        });
+      }
     }
   },
 

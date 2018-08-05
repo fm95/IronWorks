@@ -61,6 +61,15 @@ App.Entity = Backbone.Model.extend({
     attr.add(field);
   },
 
+  deleteAttributes: function() {
+    let attr = this.get('attr');
+    if(attr) {
+        attr.each( (model) => {
+          model.destroy();
+        });
+    }
+  },
+
   removeAttribute: function (attributeName) {
     let attr = this.get('attr');
     let aux = attr.findWhere({name: attributeName});
