@@ -1,12 +1,12 @@
 ROBUST-DESIGNER
 
-Back-end:
+    ~ Importazione .zip
 
-    - Add attribute to Entity
+    ~ Codice prodotto -> Hibernate
 
-    - Importazione ZIP
+    ~ Style: Chrome-Firefox-Opera-IE
 
-    ~ check xml -> hibernate
+    ~ (campo <input> con funzione compile per gli attributi delle entità)
 
 
 *** TEST ***
