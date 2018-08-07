@@ -45,27 +45,34 @@ App.Editor = Backbone.View.extend({
   },
 
   loadDati: function(dati) {
-    if(dati.name) { // .zip
-      // Entities //
-        this.entities.reset(dati.entities, {
-            parse: true
-        });
-        this.counter = this.entities.length;
-      // JointJS Diagramm //
-        let emptyGraph = this.drop.getGraph();
-        emptyGraph.fromJSON(dati.graph);
-    }
-    else { // .json
-        let emptyGraph = this.drop.getGraph();
-        emptyGraph.fromJSON(dati);
-    }
+    let graph = this.drop.getGraph();
+    graph.fromJSON(dati);
+
+    let elements = graph.getElements();
+    elements.forEach( (el) => {
+
+      const nome = el.attr('text/text');
+      const type = el.attr('label/text');
+
+      if(type === 'Entity')
+      {
+        var aux = new App.Entity({name:nome});
+        this.entities.add(aux);
+        this.counter++;
+      }
+    });
+  },
+
+  loadAttribute: function(entityName) {
+    let el = this.entities.findWhere({name:entityName});
+    let attr = el.getAttributes();
+    this.drop.caricaAttributi(attr);
   },
 
 // DRAG event //
   draw: function(el) {
     const type = el.attr('label/text');
     if(type === 'Entity') {
-        this.counter = this.entities.length;
         let name = 'Entity_' + this.counter;
         this.counter++;
         el.attr('text/text', name);
@@ -109,21 +116,6 @@ App.Editor = Backbone.View.extend({
             }
         });
       }
-    }
-  },
-
-  loadAttribute: function(entityName) {
-    let el = this.entities.findWhere({name:entityName});
-    if(el)
-    {
-      let attr = el.getAttributes();
-      this.drop.caricaAttributi(attr);
-    }
-    else // nel caso in cui importo un file .json, le entità non sono definite
-    {  // per farlo devo fare un db-click su ognuna almeno una volta, altrimenti vengono viste come un elemento normale
-      el = new App.Entity({name:entityName})
-      this.entities.add(el);
-      this.counter = this.entities.length;
     }
   },
 
