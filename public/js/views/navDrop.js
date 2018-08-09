@@ -66,10 +66,10 @@ App.navDrop = App.Editor.extend({
           const typeS = cellViewS.model.attr('label/text');
           const typeT = cellViewT.model.attr('label/text');
           if((typeS == 'Actor' && typeT == 'Boundary') || // Attore -> Interfaccia
-              (typeS == 'Boundary' && typeT == 'Controller') || // Interfaccia -> Controller
-                (typeS == 'Controller' && typeT == 'Controller') || // Controller -> Controller
-                  (typeS == 'Controller' && typeT == 'Entity') || // Controller -> Entity
-                    (typeS == 'Entity' && typeT == 'Controller')) // Entità -> Controller
+              (typeS == 'Boundary' && typeT == 'Control') || // Interfaccia -> Control
+                (typeS == 'Control' && typeT == 'Control') || // Control -> Control
+                  (typeS == 'Control' && typeT == 'Entity') || // Control -> Entity
+                    (typeS == 'Entity' && typeT == 'Control')) // Entità -> Control
                       return (magnetS !== magnetT);
           else // altrimenti connessione non valida
             return false;

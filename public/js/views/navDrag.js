@@ -183,13 +183,13 @@ App.navDrag = App.Editor.extend({
     });
     cells[1] = Boundary;
 
-  // Controller
-    var Controller = new joint.shapes.devs.CircleModel({
+  // Control
+    var Control = new joint.shapes.devs.CircleModel({
       type: 'devs.CircleModel',
       position: {x: 11, y: 350},
       attrs: {
-            label: {text:'Controller'},
-            text: {text: 'Controller'},
+            label: {text:'Control'},
+            text: {text: 'Control'},
             image: {
                 'xlink:href': './img/Controller.svg',
                 height: 70,
@@ -218,7 +218,7 @@ App.navDrag = App.Editor.extend({
           }
       },
     });
-    cells[2] = Controller;
+    cells[2] = Control;
 
   // Entity
     var Entity = new joint.shapes.devs.CircleModel({
