@@ -2,9 +2,8 @@ body {
   font-family: 'Montserrat', 'sans-serif';
   margin: 0;
   padding: 0;
-  position: fixed;
-  overflow-y: scroll;
   width: 100%;
+  position: fixed;
 }
 .label {
   font-size: 13px;
@@ -12,32 +11,34 @@ body {
 button:hover {
     opacity: 0.8;
 }
-
 /* HEADER ********************************/
 header {
   position: fixed;
   left: 0;
   top: 0;
-  height: 1.4em;
+  margin-bottom: -2px;
   width: 100%;
   text-align: center;
   background: #4E4949;
   color: white;
-  font-size: 3em;
+  font-size: 2em;
 }
 header h1 {
-  margin-top: 0.3em;
+  margin-top: 0em;
 }
 /* END header ********************************/
+.container {
 
+}
 /* FOOTER ********************************/
 footer {
     position: fixed;
-    margin-top: 10px;
-    left: 0;
-    bottom: 0;
-    height: 2.5em;
-    padding-top: 0.5em;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin-bottom:0px;
+    height: 2em;
+    padding-top: 0.2em;
     width: 100%;
     line-height: 1.5em;
     background: #4E4949;
@@ -189,7 +190,6 @@ footer {
 .divDrag {
   display: inline-block;
   vertical-align: top;
-  margin-right: 10px;
 }
 #drag {
   border: solid 1px black;
@@ -206,7 +206,7 @@ footer {
 /*********************************/
 /* Esporta dialog */
 #esportaDialog form {
-  height: 40%;
+  height: 45%;
   max-width: 50%;
 }
 #esportaDialog p {
@@ -242,6 +242,9 @@ footer {
   border-bottom-style: solid;
   border-bottom-color: grey;
   border-bottom-width: 1px;
+}
+#entityList li input[type=text] {
+  width: 70px;
 }
 .w3-ul li {
   list-style: none;

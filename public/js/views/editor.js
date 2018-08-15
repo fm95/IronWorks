@@ -125,10 +125,10 @@ App.Editor = Backbone.View.extend({
 
   addAttribute: function(entityName, value) {
     let el = this.entities.findWhere({name:entityName});
-    let fieldName = el.getAttribute(value[2]);
+    let fieldName = el.getAttribute(value[3]);
 
     if(fieldName){ // c'è già un attributo con lo stesso nome
-      el.modifyAttribute(value[2], value);
+      el.modifyAttribute(value[3], value);
     }else{ //nuovo attributo
       el.addAttribute(value);
     }

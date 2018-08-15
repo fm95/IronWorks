@@ -43,9 +43,10 @@ App.Entity = Backbone.Model.extend({
     let attr = this.get('attr');
     let field = attr.findWhere({name:fieldName});
     field.setScope(value[0]);
-    field.setType(value[1]);
-    field.setName(value[2]);
-    field.setPK(value[3]);
+    field.setArray(value[1]);
+    field.setType(value[2]);
+    field.setName(value[3]);
+    field.setPK(value[4]);
   },
 
   addAttribute: function(value) {
@@ -53,9 +54,10 @@ App.Entity = Backbone.Model.extend({
 
     let field = new App.Field();
     field.setScope(value[0]);
-    field.setType(value[1]);
-    field.setName(value[2]);
-    field.setPK(value[3]);
+    field.setArray(value[1]);
+    field.setType(value[2]);
+    field.setName(value[3]);
+    field.setPK(value[4]);
 
     attr.add(field);
   },

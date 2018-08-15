@@ -26,6 +26,7 @@ module.exports = class JavaGenerator {
                     let attribute = entity.attr[i];
                     this.newField(
                         attribute.scope,
+                        attribute.array,
                         attribute.type,
                         attribute.name,
                         attribute.primaryKey,
@@ -54,12 +55,18 @@ module.exports = class JavaGenerator {
         }
     }
 
-    newField(scope, type, name, primaryKey) {
+    newField(scope, array, type, name, primaryKey) {
         if(primaryKey === 'true'){
             this.code += ('   @Id\n');
         }
         this.code += ('   @Column(name = "' + name + '")\n');
-        this.code += ('   ' + scope + ' ' + type + ' ' + name + ';\n\n');
+
+        this.code += ('   ' + scope + ' ' + type + ' ' + name);
+        if(array === 'true'){
+          this.code += ('[];\n\n');
+        }else{
+          this.code += (';\n\n');
+        }
         this.metodi += ('   ' + type + ' get' + name.substring(0,1).toUpperCase() + name.substring(1) + '() {return ' + name + ';}\n');
         this.metodi += ('   void set' + name.substring(0,1).toUpperCase() + name.substring(1) + '(' + type + ' ' + name + ') {this.' + name + ' = ' + name + ';}\n\n');
     }

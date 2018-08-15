@@ -23,7 +23,7 @@ module.exports = class XMLGenerator {
         this.code += ('      </property>\n\n');
 
         this.code += ('      <property name="hibernate.connection.url">\n');
-        this.code += ('          jdbc:mysql://localhost/test\n');
+        this.code += ('          jdbc:mysql://localhost/ironworks\n');
         this.code += ('      </property>\n\n');
 
         this.code += ('      <property name="hibernate.connection.username">\n');
@@ -44,21 +44,4 @@ module.exports = class XMLGenerator {
 
     }
 
-/*
-    newEntity(name) {
-        this.code += '<?xml version = "1.0" encoding = "utf-8"?>\n<!DOCTYPE hibernate-mapping PUBLIC\n"-//Hibernate/Hibernate Mapping DTD//EN"\n"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">\n<hibernate-mapping>\n<class name = "' + name + '" table = "' + name + '">\n';
-        this.code += '<id name = "' + this.temporaryClassKey.name + '" column = "' + this.temporaryClassKey.name + '">\n<generator class="native"/>\n</id>\n'
-    }
-
-    newAttribute(name, type, length, pk, nn, uq, ai, def) {
-        if(!pk)
-            this.code += '<property name="'+ name + '" type="' + type +'" column="' + name + '" /> \n';
-    }
-    closeEntity() {
-        this.code += '</class>\n';
-    }
-    closeAll() {
-        this.code += '</hibernate-mapping>';
-    }
-*/
 }

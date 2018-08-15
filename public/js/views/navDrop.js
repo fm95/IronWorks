@@ -40,7 +40,7 @@ App.navDrop = App.Editor.extend({
       el: $('#paper'),
       model: this.dropGraph,
       width: 1024,
-      height: 574,
+      height: 550,
       snapLinks: true,
       linkPinning: false,
       drawGrid: true,
@@ -50,12 +50,17 @@ App.navDrop = App.Editor.extend({
       defaultLink: this.styleLink(),
       linkConnectionPoint: joint.util.shapePerimeterConnectionPoint,
       highlighting: {
-        'default': {
-            name: 'stroke',
-            options: {
-                padding: 20,
+        connecting: {
+          name: 'stroke',
+          options: {
+            padding: 17,
+            attrs: {
+                'stroke-width': 2,
+                stroke: 'green'
             }
-      }},
+          }
+        }
+      },
       validateConnection: function (cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
         if (magnetS && magnetS.getAttribute('type') === 'input')
               return false;
@@ -74,7 +79,6 @@ App.navDrop = App.Editor.extend({
           else // altrimenti connessione non valida
             return false;
       },
-
     });
 
     // Selezione elementi grafico //
@@ -115,7 +119,6 @@ App.navDrop = App.Editor.extend({
         if(typeE == 'Entity'){
           let entityName = elementView.model.attr('text/text');
           $('.nomeEnt').text(entityName);
-
           view.trigger('loadAttribute', entityName);
           $('#entityDialog').removeClass( "modalNone" ).addClass( "modalView" );
         }
@@ -138,10 +141,11 @@ App.navDrop = App.Editor.extend({
         if(newN.length > 0){
 
           if(select.isLink()) {
+            select.removeLabel(-1);
             select.appendLabel({
-                  attrs: {text: {text: newN}},
-                  position: {distance: 0.50}
-                });
+              attrs: {text: {text: newN}},
+              position: {distance: 0.50}
+            });
           }
           else {
               const type = select.attr('label/text');
@@ -165,6 +169,7 @@ App.navDrop = App.Editor.extend({
         $("#entityList").append(this.attribute);
 
         $('#entityList li:last .scope').val(item.getScope());
+        $('#entityList li:last .arr').val(item.getArray());
         $('#entityList li:last .type').val(item.getType());
         $("#entityList li:last .nomeE").val(item.getName());
         $('#entityList li:last .pk').val(item.getPK());
@@ -186,12 +191,14 @@ App.navDrop = App.Editor.extend({
           AttrNames.push(nome);
           // SCOPE //
            let scope = $( ".scope:eq(" + i + ") option:selected" ).text();
+          // ARRAY //
+           let array = $( ".arr:eq(" + i + ") option:selected" ).text();
           // TYPE //
            let type = $( ".type:eq(" + i + ") option:selected" ).text();
           // PK //
            let pk = $( ".pk:eq(" + i + ") option:selected" ).text();
 
-          let value = [scope, type, nome, pk];
+          let value = [scope, array, type, nome, pk];
           view.trigger('addAttribute', entityName, value);
         }
         else {
@@ -230,6 +237,13 @@ App.navDrop = App.Editor.extend({
                       '<option value="protected">protected</option>'+
                       '<option value="public">public</option>'+
                     '</select>'+
+                  '</div>'+
+                  '<div class="w3-bar-item">'+
+                    '<span class="w3-large">Array: </span>'+
+                      '<select class="arr">'+
+                        '<option value="false">false</option>'+
+                        '<option value="true">true</option>'+
+                      '</select>'+
                   '</div>'+
                   '<div class="w3-bar-item">'+
                     '<span class="w3-large">Type: </span>'+

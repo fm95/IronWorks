@@ -28,7 +28,7 @@ App.navDrag = App.Editor.extend({
         drawGrid: true,
         gridSize: 10,
         width: 100,
-        height: 574,
+        height: 550,
         model: this.dragGraph,
         interactive: false,
         background: {

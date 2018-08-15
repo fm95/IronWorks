@@ -6,6 +6,7 @@ App.Field = Backbone.Model.extend({
 
   defaults: {
     scope: '',
+    array: '',
     type: '',
     name: '',
     // value
@@ -18,6 +19,14 @@ App.Field = Backbone.Model.extend({
 
   getScope: function() {
     return this.get('scope');
+  },
+
+  setArray: function (array) {
+    this.set({array: array});
+  },
+
+  getArray: function() {
+    return this.get('array');
   },
 
   setType: function (type) {
